@@ -70,15 +70,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	//*** please change all your functions to es6
+	//*** our card object might get bigger. when you used underscores did you account for that?
+	//*** can you break your components into the component folder
+	
 	var Table = _react2.default.createClass({
 	  displayName: 'Table',
 	
 	  getInitialState: function getInitialState() {
 	    var shuffled = _underscore2.default.shuffle(this.props.deck);
-	    console.log("shuffled", shuffled);
 	    return { deck: shuffled };
 	  },
 	  handleDealButton: function handleDealButton() {
+	
 	    var deck = this.state.deck;
 	    var player1 = [];
 	    var player2 = [];
@@ -87,6 +91,9 @@
 	    var player5 = [];
 	    var player6 = [];
 	
+	    //*** setup an array of player objects that you can map over since there will not always be six players. 
+	    //*** remove things from the front of the deck. I think it will better. so everyone can use push with there functions
+	    //*** side though: Maybe think of a way we can reuse the function when the player exchanges cards. we can check to see which cards are null?
 	    //player hand, deal 2 cards
 	    player1.push(deck.pop());
 	    player2.push(deck.pop());
@@ -100,7 +107,6 @@
 	    player4.push(deck.pop());
 	    player5.push(deck.pop());
 	    player6.push(deck.pop());
-	    console.log(player1);
 	
 	    this.setState({
 	      player1: player1,
@@ -128,15 +134,13 @@
 	////////////////////
 	
 	//css
-	var Cards = _react2.default.createClass({
-	  displayName: 'Cards',
+	var Card = _react2.default.createClass({
+	  displayName: 'Card',
 	  render: function render() {
-	    console.log("props", this.props);
-	    // var url = '../../img/'
-	    console.log('../../img/' + this.props.face + '.png');
 	    var cardFace = __webpack_require__(180)("./" + this.props.face + '.png');
 	    var cardImg = this.props.hidden ? _back2.default : cardFace;
 	
+	    //*** define your css style in the css files
 	    var cardStyle = {
 	      padding: 0,
 	      WebkitFilter: "drop-shadow(0px 0px 5px #666)",
@@ -151,19 +155,7 @@
 	  }
 	});
 	
-	var Card = _react2.default.createClass({
-	  displayName: 'Card',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'h1',
-	      { className: 'card' },
-	      'This is a card'
-	    );
-	  }
-	});
-	
 	////////////////////////
-	
 	var Hand = _react2.default.createClass({
 	  displayName: 'Hand',
 	
@@ -175,10 +167,8 @@
 	  render: function render() {
 	    console.log("props hand", this.props.hand);
 	    var twoCards = this.props.hand.map(function (result, index) {
-	      return _react2.default.createElement(Cards, { key: index, face: result.f, hidden: false });
+	      return _react2.default.createElement(Card, { key: index, face: result.f, hidden: false });
 	    });
-	    var oneCard = _react2.default.createElement(Card, null);
-	    console.log(twoCards);
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'hand' },
@@ -188,6 +178,8 @@
 	});
 	
 	//////////////////////
+	
+	//*** is there a reason why you broke this component out. it is fine. I just curious to know
 	var Interface = _react2.default.createClass({
 	  displayName: 'Interface',
 	
@@ -206,7 +198,8 @@
 	});
 	
 	////////////////////////
-	
+	//*** there is an app and a main which is a little confusing
+	//*** is there a shuffle button
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 	
