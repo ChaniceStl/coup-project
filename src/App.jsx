@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore'
-import './App.css';
-import cardBack from './img/back.png'
 
-// <img src={require('./logo-final-120.png')} height="150" width="auto" alt="Commodifi Logo Small"/>
+var img = document.createElement('img');
+img.src = require('../img/back.png');
+
+//css
+import './scss/app.scss';
+
+
+//<img src={require('./logo-final-120.png')} height="150" width="auto" alt="Commodifi Logo Small"/>
 
 var App = React.createClass({
 
