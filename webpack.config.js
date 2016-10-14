@@ -1,23 +1,28 @@
 module.exports = {
-  entry: "./app/js/app.jsx",
+  entry: "./src/App.jsx",
   output: {
-    path: "./app/js/",
+    path: "./public",
     filename: "bundle.js",
   },
   //what is bundle.js doing?
   module: {
     loaders: [
       {
-        test: [/\.jsx?$/, /\.js?$/],
-        //what problem is this solving?
-        //what is regex?
-        exclude: /(node_modules)/,
-        loader: 'babel',
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      },
+      { 
+        test: /\.(png|jpg)$/, 
+        loader: 'url-loader?limit=8192' 
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: "babel-loader",
         query: {
           presets: ['es2015', 'react']
-          //transpiling & compilation
         }
-      }
+      },
     ]
   },
   devtool: 'source-map',
