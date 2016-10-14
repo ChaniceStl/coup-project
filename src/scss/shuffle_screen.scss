@@ -3,8 +3,15 @@ body {
 }
 
 .hand {
-  height:auto;
+  height:80vh;
+  border: 3px solid red;
   overflow: auto;
+}
+
+.card {
+  height: 40%;
+  width: 40%;
+  border: 3px solid blue;
 }
 
 .interface {

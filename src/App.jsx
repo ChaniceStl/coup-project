@@ -2,44 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore'
 
-var img = document.createElement('img');
-img.src = require('../img/back.png');
+import deck from './deck.js'
+import cardBack from '../img/back.png'
 
 //css
 import './scss/app.scss';
 
 
-//<img src={require('./logo-final-120.png')} height="150" width="auto" alt="Commodifi Logo Small"/>
-
-var App = React.createClass({
-
-  getInitialState:function() {
-
-    return {deck: [
-          {f:"act_1"},{f:"act_2"},{f:"act_3"},{f:"agn_1"},{f:"agn_2"},{f:"agn_3"},
-          {f:"att_1"},{f:"att_2"},{f:"att_3"},{f:"dir_1"},{f:"dir_2"},{f:"dir_3"},
-          {f:"ing_1"},{f:"ing_2"},{f:"ing_3"},{f:"per_1"},{f:"per_2"},{f:"per_3"}
-        ]
-      };
-  },
-  shuffleDeck : function(deck){
-    return _.shuffle(_.shuffle(_.shuffle(_.shuffle(deck))));
-  },
-  render: function () {
-    return (
-      <div>
-        <h2>Tabloid</h2>
-        <Table deck={this.shuffleDeck(this.state.deck)}/>
-      </div>
-    )
-  }
-})
-
-/////////////////////
-
 var Table = React.createClass({
   getInitialState: function () {
     var shuffled = _.shuffle(this.props.deck);
+    console.log("shuffled",shuffled)
     return {deck: shuffled}  
   },
   handleDealButton: function () {
@@ -64,6 +37,7 @@ var Table = React.createClass({
       player4.push(deck.pop());
       player5.push(deck.pop());
       player6.push(deck.pop());
+    console.log(player1)
         
         this.setState({
             player1 :  player1,
@@ -90,6 +64,38 @@ var Table = React.createClass({
 
 ////////////////////
 
+var Cards = React.createClass({
+  render(){
+    console.log("props",this.props)
+    // var url = '../../img/'
+    console.log('../../img/' + this.props.face + '.png')
+    let cardFace = require('../img/' + this.props.face + '.png')
+    let cardImg = (this.props.hidden) ? cardBack : cardFace
+
+    let cardStyle = {
+        padding: 0,
+        WebkitFilter: "drop-shadow(0px 0px 5px #666)",
+        filter: "drop-shadow(0px 0px 5px #666)"
+      }
+      
+    return (
+      <div className='card' style={cardStyle}>
+        <img src={cardImg} />
+      </div>
+    )
+  }
+})
+
+var Card = React.createClass({
+  render() {
+    return (
+      <h1 className="card">This is a card</h1>
+    )
+  }
+})
+
+////////////////////////
+
 var Hand = React.createClass({
   getDefaultProps: function () {
     return {
@@ -97,42 +103,21 @@ var Hand = React.createClass({
     }
   },
   render: function () {
+    console.log("props hand",this.props.hand)
+    let twoCards = this.props.hand.map((result, index) => {
+      return <Cards key={index} face={result.f} hidden={false}/>
+    })
+    let oneCard = <Card/>
+    console.log(twoCards)
     return (
       <div className='hand'>
-        {this.props.showDeck ? <Card hidden={false} /> : ''}
-        {this.props.hand ? this.props.hand.map((result, index) => (
-          <Card key={index} face={result.f} />
-        )) : null}
+        {this.props.hand ? twoCards : null}
       </div>
-
     )
   }
 })
 
 //////////////////////
-
-var Card = React.createClass({
-  render: function () {
-    var url = 'url(./img/'
-    var cardImg = (this.props.hidden)
-      ? 'url(' + cardBack + ')'
-      :  url + this.props.face + '.png)';
-
-    var cardStyle = {
-        padding: 0,
-        backgroundImage: cardImg,
-        WebkitFilter: "drop-shadow(0px 0px 5px #666)",
-        filter: "drop-shadow(0px 0px 5px #666)"
-      }
-      
-    return (
-      <div className='card' style={cardStyle}></div>
-    )
-  }
-})
-
-////////////////////////
-
 var Interface = React.createClass({
   render: function() {
     return (
@@ -147,12 +132,31 @@ var Interface = React.createClass({
 
 ////////////////////////
 
+var App = React.createClass({
+
+  getInitialState:function() {
+    return {deck: deck};
+  },
+  shuffleDeck : function(deck){
+    return _.shuffle(_.shuffle(_.shuffle(_.shuffle(deck))));
+  },
+  render: function () {
+    return (
+      <div>
+        <h2>Tabloid</h2>
+        <Table deck={this.shuffleDeck(this.state.deck)}/>
+      </div>
+    )
+  }
+})
+
+////////////////////////
+
 var Main = React.createClass({
   render: function () {
     return (
       <div>
-      <Table />
-      <Hand />
+        <App />
       </div>
     )
   }
