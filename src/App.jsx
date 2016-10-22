@@ -8,6 +8,9 @@ import cardBack from '../img/back.png'
 //css
 import './scss/app.scss';
 
+//button
+import Button from "./button/button.jsx"
+
 //*** please change all your functions to es6
 //*** our card object might get bigger. when you used underscores did you account for that?
 //*** can you break your components into the component folder
@@ -140,6 +143,8 @@ var App = React.createClass({
       <div>
         <h2>Tabloid</h2>
         <Table deck={this.shuffleDeck(this.state.deck)}/>
+        {this.props.children}
+        <Button />
       </div>
     )
   }
