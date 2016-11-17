@@ -138,7 +138,7 @@
 	
 	////////////////////
 	
-	//button
+	//buttons
 	var Card = _react2.default.createClass({
 	  displayName: 'Card',
 	  render: function render() {
@@ -224,7 +224,9 @@
 	        null,
 	        'Tabloid'
 	      ),
-	      _react2.default.createElement(Table, { deck: this.shuffleDeck(this.state.deck) })
+	      _react2.default.createElement(Table, { deck: this.shuffleDeck(this.state.deck) }),
+	      this.props.children,
+	      _react2.default.createElement(_button2.default, null)
 	    );
 	  }
 	});
@@ -23555,17 +23557,50 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Button = function Button() {
-		return _react2.default.createElement(
-			"div",
-			null,
-			_react2.default.createElement(
-				"button",
+	var Button = _react2.default.createClass({
+		displayName: "Button",
+		getInitialState: function getInitialState() {
+			return { income: 0, aid: 0 };
+		},
+		addIncome: function addIncome() {
+			this.setState({ income: this.state.income + 1 });
+		},
+		addAid: function addAid() {
+			this.setState({ aid: this.state.aid + 2 });
+	
+			//so if the bluff button was fired it will remove 2 from aid
+			// if(document.getElementById('bluff').on('click')){
+			// 	this.setState({aid: this.state.aid - 2})
+			// }else{
+			// 	this.setState({aid: this.state.aid +2})
+			// }
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
 				null,
-				"Action"
-			)
-		);
-	};
+				_react2.default.createElement(
+					"button",
+					{ id: "incomeButton", onClick: this.addIncome, type: "button" },
+					"Income"
+				),
+				this.state.income,
+				_react2.default.createElement(
+					"button",
+					{ id: "aidButton", onClick: this.addAid,
+						type: "button" },
+					"Aid"
+				),
+				this.state.aid,
+				_react2.default.createElement(
+					"button",
+					{ id: "bluff",
+						type: "button" },
+					"Bluff"
+				)
+			);
+		}
+	});
 	
 	exports.default = Button;
 
